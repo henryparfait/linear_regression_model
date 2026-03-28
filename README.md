@@ -7,6 +7,7 @@
 
 **API Endpoint:** https://diabetes-prediction-api-p7cy.onrender.com  
 **Swagger UI:** https://diabetes-prediction-api-p7cy.onrender.com/docs
+**Video Demo:** https://youtu.be/74LK4TLficM
 
 ## How to Run the Mobile App
 1. Navigate to `summative/FlutterApp/`
