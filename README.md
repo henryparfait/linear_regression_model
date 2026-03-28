@@ -6,7 +6,7 @@
 **Best Model:** Random Forest Regressor (Test MSE: 2835.96, R²: 0.46)
 
 **API Endpoint:** https://diabetes-prediction-api-p7cy.onrender.com  
-**Swagger UI:** https://diabetes-prediction-api-p7cy.onrender.com/docs
+**Swagger UI:** https://diabetes-prediction-api-p7cy.onrender.com/docs  
 **Video Demo:** https://youtu.be/74LK4TLficM
 
 ## How to Run the Mobile App
