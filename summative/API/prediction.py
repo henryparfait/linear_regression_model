@@ -1,6 +1,5 @@
 """
 Diabetes Progression Prediction API
-FastAPI application that serves predictions using the best-trained model from Task 1.
 """
 
 from fastapi import FastAPI, HTTPException
@@ -16,7 +15,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 import os
 
-# ── Initialize FastAPI App ───────────────────────────────────────────────────
+# Initialize FastAPI App 
 app = FastAPI(
     title="Diabetes Progression Prediction API",
     description=(
@@ -26,9 +25,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# ── CORS Middleware Configuration ────────────────────────────────────────────
-# Configured with specific origins rather than wildcard (*) for security.
-# Allows the Flutter app and common development origins to access the API.
+# CORS Middleware Configuration 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -44,12 +41,10 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization", "Accept", "X-Requested-With"],
 )
 
-# ── Pydantic Input Schema with Data Types and Range Constraints ──────────────
+# Pydantic Input Schema with Data Types and Range Constraints 
 class DiabetesInput(BaseModel):
     """
     Input schema for diabetes progression prediction.
-    Each feature has an enforced data type (float) and realistic range constraints
-    based on the diabetes dataset from sklearn (mean-centered and scaled values).
     """
     age: float = Field(
         ...,
@@ -113,7 +108,7 @@ class DiabetesInput(BaseModel):
         }
 
 
-# ── Pydantic Output Schema ──────────────────────────────────────────────────
+# Pydantic Output Schema 
 class PredictionOutput(BaseModel):
     prediction: float = Field(
         ..., description="Predicted diabetes disease progression score"
@@ -123,7 +118,7 @@ class PredictionOutput(BaseModel):
     )
 
 
-# ── Model Loading ────────────────────────────────────────────────────────────
+# Model Loading 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "best_model.pkl")
 SCALER_PATH = os.path.join(os.path.dirname(__file__), "scaler.pkl")
 
@@ -143,7 +138,7 @@ def train_and_save_model():
     df = pd.DataFrame(diabetes.data, columns=diabetes.feature_names)
     df['target'] = diabetes.target
 
-    # Drop s1 (multicollinearity with s2) — same as Task 1
+    # Drop s1 (multicollinearity with s2)
     df = df.drop(columns=['s1'])
 
     X = df.drop(columns=['target'])
@@ -175,7 +170,7 @@ def train_and_save_model():
 model, scaler = load_model_and_scaler()
 
 
-# ── API Endpoints ────────────────────────────────────────────────────────────
+# API Endpoints 
 @app.get("/")
 def root():
     """Root endpoint with API information."""
@@ -226,10 +221,6 @@ def predict(data: DiabetesInput):
 def retrain():
     """
     Retrain the model with the latest data.
-
-    This endpoint triggers a full model retraining pipeline:
-    loads the dataset, preprocesses, trains a new Random Forest model,
-    evaluates it, and saves the updated model to disk.
     """
     global model, scaler
 
